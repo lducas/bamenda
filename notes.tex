@@ -1,5 +1,6 @@
 \documentclass[12pt]{article}
 
+\usepackage{times}
 \usepackage[utf8]{inputenc}
 \usepackage{amsmath,amsfonts,amssymb,amstext}
 \usepackage{fullpage}
@@ -115,11 +116,11 @@ The intent is to give an intuitive geometric guide to understand recent research
 
 \paragraph{Additional resources}
 
-The sources of this lecture notes, and other documents associated with those lectures are available online~\footnote{\url{https://github.com/lducas/bamenda}}, including the slides on cryptography, and the solution in \texttt{gp} to the programming exercises.
+The sources of this lecture notes, and other documents associated with those lectures are available online\footnote{\url{https://github.com/lducas/bamenda}}, including the slides on cryptography, and the solution in \texttt{gp} to the programming exercises.
 
 A significant portion of those notes are adapted from the Chapter 2 of my Ph.D. thesis\footnote{\url{http://homepages.cwi.nl/~ducas/Thesis/index.html}}, where one may find a more complete presentation of lattices and lattice-based cryptography. It was also inspired by the lecture notes of Daniele Micciancio\footnote{\url{http://cseweb.ucsd.edu/classes/sp14/cse206A-a/index.html}}. Both are available online (see the reference section). 
 
-For a more advanced course on lattices (with less cryptography) on can also study the lectures notes of Oded Regev\footnote{\url{http://cs.nyu.edu/courses/spring13/CSCI-GA.3033-013/index.html} and \url{http://www.cims.nyu.edu/~regev/teaching/lattices_fall_2009/index.html}}. For textbook on complexity theory related to lattices on can refer to the book of  Micciancio and Goldwasser. Unfortunately, no textbook on lattice based cryptography is available so far, but a long survey of Peikert\footnote{\url{https://eprint.iacr.org/2015/939}} is also available online.
+For a more advanced course on lattices (with less cryptography) on can also study the lectures notes of Oded Regev\footnote{\url{http://cs.nyu.edu/courses/spring13/CSCI-GA.3033-013/index.html}} \footnote{\url{http://www.cims.nyu.edu/~regev/teaching/lattices_fall_2009/index.html}}. For textbook on complexity theory related to lattices on can refer to the book of  Micciancio and Goldwasser. Unfortunately, no textbook on lattice based cryptography is available so far, but a long survey of Peikert\footnote{\url{https://eprint.iacr.org/2015/939}} is also available online.
 
 
 \section{Lattices and basic properties}
@@ -183,7 +184,7 @@ Both definitions for lattices are equivalent, that is
 \end{itemize}
 \end{theorem}
 \begin{problem}
-  Prove the above theorem, with the help of the definitions and propositions developed below.
+  Prove the above theorem, with the help of the definitions and propositions developed in the rest of this lecture.
 \end{problem}
 
 Lattice are therefore discrete analogues of vector spaces. Both structures share some properties: for example, they both have bases. As vector spaces, lattices can have {\em many different basis}. In fact, for vector-spaces, two basis define the same vector space if and only if there is an invertible matrix sending one to the other. The situation is similar with lattices, but the transition matrices are exactly the unimodular matrices.
@@ -365,7 +366,7 @@ In particular, this gives a relation between the GSO of a basis and the volume o
 
 \begin{corollary}
 If $\vec B$ is the basis of a $n$-dimensional lattice $L \subset \R^m$, and $\vec B^\star$ is its GSO,
-then \[\Vol(L) = \prod_{i = 1}^n \norm{\vec b^\star_i}\].
+then \[\Vol(L) = \prod_{i = 1}^n \norm{\vec b^\star_i}.\]
 \end{corollary}
 \begin{proof}
   Simply note that $\Vol(L) = \Vol(\cP(\vec B))$ where
@@ -454,7 +455,7 @@ This problem has many variant, for example the hardest variant is the closest ve
 
 The variants that we will use for cryptography are described below. Those variants are not known to be NP-hard, but are still quite hard to solve, and typically require exponential time to solve (unless one is equipped with a {\em good basis} of $L$, as we shall see below).
 
-This first version asks one to find a solution at distance at most $d$, and it is implicitly assumed that $d$ is large enough so that at least one solution exists for any target vector $\vec t$. For a more formal understanding of this implicit condition, please refer to the notion of {\em covering radius} of a lattice, as defined in Lecture X of~XXX. One note that the larger $\eta$ is, the easier the problem gets, and gets trivial for $\eta = \infty$.
+This first version asks one to find a solution at distance at most $d$, and it is implicitly assumed that $d$ is large enough so that at least one solution exists for any target vector $\vec t$. For a more formal understanding of this implicit condition, please refer to the notion of {\em covering radius} of a lattice, as defined in Lecture 2, Section 5 of Micciancio\footnote{\url{http://cseweb.ucsd.edu/classes/sp14/cse206A-a/lec2.pdf}}. One note that the larger $\eta$ is, the easier the problem gets, and gets trivial for $\eta = \infty$.
 
 \begin{definition}[Close vector problem: $\delta$-CVP]
   Given the basis $\vec B \in \R^{n \times n}$ of a (full-rank) lattice $L \in \R^n$, and a target $\vec t \in \R^n$ find $\vec v \in L$ such $\|\vec t - \vec v\| \leq \delta$.
@@ -532,7 +533,7 @@ As we have seen above, the ability to solve the $\delta$-CVP and $\eta$-BDD prob
 This very idea gives a foundation to build asymmetric cryptography from lattices. It goes as follows:
 \begin{itemize}
   \item Alice chooses a good basis $\vec G$, and set $L = \cL(\vec G)$. She keeps $\vec G$ as a {\em secret key} $sk = \vec G$.
-  \item She also derives $\vec B$ a bad basis of the same lattice: $\cL(\vec B) = \cL(\vec G)$.\footnote{ This can be done for example by sampling a random unimodular matrix $\vec U$ and setting $\vec B = \vec G \vec U$. There are better ways to do that, see the Hermite normal form in the lecture X from XXX} She makes $pk = \vec B$ public as her {\em public key}.
+  \item She also derives $\vec B$ a bad basis of the same lattice: $\cL(\vec B) = \cL(\vec G)$.\footnote{ This can be done for example by sampling a random unimodular matrix $\vec U$ and setting $\vec B = \vec G \vec U$. There are better ways to do that, see the Hermite Normal Form in the lecture 1 and 4 from Micciancio: \url{http://cseweb.ucsd.edu/classes/sp14/cse206A-a/} } She makes $pk = \vec B$ public as her {\em public key}.
   \item Bob uses $\vec B$ to encrypt messages
   \item Alice uses $\vec G$ to decrypt messages.
 \end{itemize}
